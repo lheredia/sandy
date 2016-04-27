@@ -2,18 +2,18 @@
 
 class Usuarios extends CI_Controller {
     
+    public function __construct() {
+        
+        parent::__construct();
+        
+        $this->load->model('MUsuarios');
+        
+    }
+    
 	public function index()
 	{
         
-        $query = $this->db->get('usuarios');
-        
-        if( !$query) {
-            
-            exit('error');
-            
-        }
-        
-        $records = $query->result_array();
+        $records = $this->MUsuarios->read();
         
         $this->load->view('usuarios/list', [
             'f'=>$records,
@@ -31,15 +31,7 @@ class Usuarios extends CI_Controller {
             'isGod'=>$this->input->post('isGod'),
         ];
         
-        $query = $this->db->insert('usuarios', $input);
-        
-        if( !$query) {
-            
-            exit('error');
-            
-        }
-        
-        $input ['id']= $this->db->insert_id();
+        $this->MUsuarios->create($input);
         
         redirect('usuarios/');
         
@@ -51,13 +43,7 @@ class Usuarios extends CI_Controller {
             'id'=>$this->input->post('id'),
         ];
         
-        $query = $this->db->delete('usuarios', $input);
-        
-        if( !$query) {
-            
-            exit('error');
-            
-        }
+        $this->MUsuarios->delete($input);
         
         redirect('usuarios/');
         
@@ -74,17 +60,7 @@ class Usuarios extends CI_Controller {
             'isGod'=>$this->input->post('isGod'),
         ];
 
-        $this->db->where('id', $input['id']);
-        
-        unset($input['id']);
-
-        $query = $this->db->update('usuarios', $input);
-        
-        if( !$query) {
-            
-            exit('error');
-            
-        }
+        $this->MUsuarios->update($input);
         
         redirect('usuarios/');
         
