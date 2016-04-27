@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Listado de usuarios (<?php echo $tf; ?>)</h1>
+                    <h1>Listado de <?php echo $title; ?> (<?php echo $tf; ?>)</h1>
                 </div>
             </div>
             
@@ -18,7 +18,7 @@
                 <div class="col-md-12">
                     <table class="table">
                         <tr>
-                            <form action="/index.php/usuarios/create/" method="POST">
+                            <form action="/index.php/<?php echo $url; ?>/create/" method="POST">
                                 <?php foreach ($f[0] as $field => $value) : ?>
                                 <th>
                                     <input class="form-control" placeholder="<?php echo $field; ?>" id="<?php echo $field; ?>" name="<?php echo $field; ?>" />
@@ -36,6 +36,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <table class="table">
+                        <?php if( !$tf) : ?>
+                            
+                        <th>No hay <?php echo $title; ?></th>
+
+                        <?php else : ?>
                         <tr>
                             <?php foreach ($f[0] as $field => $value) : ?>
                             <th><?php echo $field; ?></th>
@@ -45,7 +50,7 @@
                         </tr>
                         <?php foreach ($f as $i => $record) : ?>
                         <tr>
-                            <form action="/index.php/usuarios/modificar/" method="POST">
+                            <form action="/index.php/<?php echo $url; ?>/modificar/" method="POST">
                             <?php foreach($record as $field => $value): ?>
                             <td>
                                 <input class="form-control" id="<?php echo $field; ?>" name="<?php echo $field; ?>" value="<?php echo $value; ?>" />
@@ -60,6 +65,7 @@
                             </form>
                         </tr>
                         <?php endforeach; ?>
+                        <?php endif; ?>
                     </table>
                 </div>
             </div>
@@ -75,7 +81,7 @@
                 
                 var form = $(this).parent().parent().find('form');
                 
-                form.attr('action', '/index.php/usuarios/eliminar/');
+                form.attr('action', '/index.php/<?php echo $url; ?>/eliminar/');
                 
             });
             
