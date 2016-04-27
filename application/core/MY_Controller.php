@@ -3,6 +3,7 @@
 class MY_Controller extends CI_Controller {
     
     public $table = '';
+    public $autoIncrementable = TRUE;
     
     public function __construct() {
         
@@ -44,7 +45,10 @@ class MY_Controller extends CI_Controller {
         }
         
         /* ejecutamos modelo */
-        $this->MCrud->setTable($this->table)->create($input);
+        $this->MCrud
+            ->setTable($this->table)
+            ->setAutoincrementable($this->autoIncrementable)
+            ->create($input);
         
         /* redireccion  */
         redirect($this->table . '/');
