@@ -27,6 +27,8 @@ class Usuarios extends CI_Controller {
         $input = [
             'nombre'=>$this->input->post('nombre'),
             'pass'=>$this->input->post('pass'),
+            'activo'=>$this->input->post('activo'),
+            'isGod'=>$this->input->post('isGod'),
         ];
         
         $query = $this->db->insert('usuarios', $input);
@@ -39,27 +41,43 @@ class Usuarios extends CI_Controller {
         
         $input ['id']= $this->db->insert_id();
         
-        /* diccionario de datos  */
-        $data = [
-            'usuario'=>$input
-        ];
-        
-        $this->load->view('usuarios/create', $data);
+        redirect('usuarios/');
         
     }
     
-    public function update() {
+    public function eliminar() {
+        
+        $input = [
+            'id'=>$this->input->post('id'),
+        ];
+        
+        $query = $this->db->delete('usuarios', $input);
+        
+        if( !$query) {
+            
+            exit('error');
+            
+        }
+        
+        redirect('usuarios/');
+        
+    }
+    
+    public function modificar() {
         
         $input = [
             'id'=>$this->input->post('id'),
             'nombre'=>$this->input->post('nombre'),
             'pass'=>$this->input->post('pass'),
+            'activo'=>$this->input->post('activo'),
+            'sistema'=>$this->input->post('sistema'),
+            'isGod'=>$this->input->post('isGod'),
         ];
-        
+
         $this->db->where('id', $input['id']);
         
         unset($input['id']);
-        
+
         $query = $this->db->update('usuarios', $input);
         
         if( !$query) {
@@ -68,12 +86,7 @@ class Usuarios extends CI_Controller {
             
         }
         
-        /* diccionario de datos  */
-        $data = [
-            'usuario'=>$input
-        ];
-        
-        $this->load->view('usuarios/update', $data);
+        redirect('usuarios/');
         
     }
     
