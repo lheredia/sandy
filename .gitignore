@@ -1,2 +1,2 @@
 nbproject
-application/config/database.php
+apps/**/config/database.php
